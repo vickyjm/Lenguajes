@@ -52,7 +52,7 @@ En esta sección puede agregar todas las directivas necesarias para importar sí
 > import Control.Applicative (pure)
 > import Control.DeepSeq     (NFData, ($!!))
 > import Control.Monad       (void)
-> import Data.Map            (Map, empty, foldMapWithKey, singleton)
+> import Data.Map            (Map, empty, singleton)
 > import GHC.Generics        (Generic)
 > import System.Environment  (getArgs, getProgName)
 > import System.IO           (hPutStrLn, stderr)
@@ -113,7 +113,7 @@ En el contexto de *Haskell*, un **catamorfismo** es cualquier transformación de
 >     Multiplicación e1 e2 -> evaluar e1 * evaluar e2
 >     División       e1 e2 -> evaluar e1 / evaluar e2
 >     Negativo       e     -> -(evaluar e)
->     Literal        n     -> n
+>     Literal        n     -> fromIntegral n
 
 En particular,
 
@@ -298,10 +298,10 @@ Combinadores
 **Ejercicio 10** (0.15 puntos cada una; 0.6 puntos en total): Complete las siguientes definiciones para combinadores que produzcan representaciones de los elementos de XHTML `title`, `style`, `h1` y `p` a partir de un `String` con el texto que debe incluirse dentro de ellos.  Los elementos resultantes de aplicar estos combinadores deben tener diccionarios de atributos vacíos, salvo el elemento `style` que debe tener el atributo `type` asociado al texto `text/css`.
 
 > styleE, titleE, h1E :: String -> Elemento
-> styleE = Elemento "style" (singleton "type" "text/css") flip (:) [] $ Texto
-> titleE = Elemento "title" empty flip (:) [] $ Texto
-> h1E    = Elemento "h1" empty flip (:) [] $ Texto
-> pE     = Elemento "p" empty flip (:) [] $ Texto
+> styleE x = Elemento "style" (singleton "type" "text/css") [(Texto x)]
+> titleE x = Elemento "title" empty [(Texto x)]
+> h1E x   = Elemento "h1" empty [(Texto x)]
+> pE x  = Elemento "p" empty [(Texto x)]
 
 ---
 
