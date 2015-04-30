@@ -298,10 +298,10 @@ Combinadores
 **Ejercicio 10** (0.15 puntos cada una; 0.6 puntos en total): Complete las siguientes definiciones para combinadores que produzcan representaciones de los elementos de XHTML `title`, `style`, `h1` y `p` a partir de un `String` con el texto que debe incluirse dentro de ellos.  Los elementos resultantes de aplicar estos combinadores deben tener diccionarios de atributos vacíos, salvo el elemento `style` que debe tener el atributo `type` asociado al texto `text/css`.
 
 > styleE, titleE, h1E :: String -> Elemento
-> styleE x = Elemento "style" (singleton "type" "text/css") [(Texto x)]
-> titleE x = Elemento "title" empty [(Texto x)]
-> h1E x   = Elemento "h1" empty [(Texto x)]
-> pE x  = Elemento "p" empty [(Texto x)]
+> styleE = Elemento "style" (singleton "type" "text/css") . (:[]) . Texto
+> titleE  = Elemento "title" empty . (:[]) . Texto
+> h1E   = Elemento "h1" empty . (:[]) . Texto
+> pE   = Elemento "p" empty . (:[]) . Texto
 
 ---
 
