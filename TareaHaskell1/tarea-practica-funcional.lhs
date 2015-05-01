@@ -247,18 +247,18 @@ En efecto, todo catamorfismo se construye de la misma forma para un tipo algebra
 
 > operaciones' :: Expresión -> Integer
 >operaciones' = cataExpresión g g g g (1+) (*0)
-                where g x y = 1 + x + y
+>                where g x y = 1 + x + y
 
 > sumaLiterales' :: Expresión -> Integer
 > sumaLiterales' = cataExpresión (+) (+) (+) (+) (0+) (*1)
 
 > literales' :: Expresión -> [Integer]
 > literales' = cataExpresión (++) (++) (++) (++) (++[]) (f)
-            where f x = [x]
+>            where f x = [x]
 
 > altura' :: Expresión -> Integer
 > altura' = cataExpresión h h h h (1+) (0*)
-            where h x y = 1 + max x y
+>            where h x y = 1 + max x y
 
 
 
