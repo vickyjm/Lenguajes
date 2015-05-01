@@ -243,19 +243,22 @@ En efecto, todo catamorfismo se construye de la misma forma para un tipo algebra
 **Ejercicio 8** (0.2 puntos cada una; 1 punto en total): Complete las siguientes definiciones para los catamorfismos que definió en las preguntas anteriores, esta vez en términos de `cataExpresión`.
 
 > evaluar' :: Expresión -> Double
-> evaluar' = cataExpresión + - * / (*(-1)) (*1)
->
+> evaluar' = cataExpresión (+) (-) (*) (/) (*(-1)) (fromIntegral)
+
 > operaciones' :: Expresión -> Integer
-> operaciones' = undefined
->
+>operaciones' = cataExpresión g g g g (1+) (*0)
+                where g x y = 1 + x + y
+
 > sumaLiterales' :: Expresión -> Integer
-> sumaLiterales' = undefined
->
+> sumaLiterales' = cataExpresión (+) (+) (+) (+) (0+) (*1)
+
 > literales' :: Expresión -> [Integer]
-> literales' = undefined
->
+> literales' = cataExpresión (++) (++) (++) (++) (++[]) (f)
+            where f x = [x]
+
 > altura' :: Expresión -> Integer
-> altura' = undefined
+> altura' = cataExpresión h h h h (1+) (0*)
+            where h x y = 1 + max x y
 
 
 
