@@ -228,14 +228,22 @@ En efecto, todo catamorfismo se construye de la misma forma para un tipo algebra
 >   división
 >   negativo
 >   literal
->   = undefined
+>   = f
+>    where f = \ case
+>         Suma e1 e2 = suma (f e1) (f e2)
+>         Resta e1 e2 = resta (f e1) (f e2)
+>         Multiplicación e1 e2 = multiplicación (f e1) (f e2)
+>         División e1 e2 = división (f e1) (f e2)
+>         Negativo e1 = negativo (f e1)
+>         Literal e1 = literal e1
+
 
 ---
 
 **Ejercicio 8** (0.2 puntos cada una; 1 punto en total): Complete las siguientes definiciones para los catamorfismos que definió en las preguntas anteriores, esta vez en términos de `cataExpresión`.
 
 > evaluar' :: Expresión -> Double
-> evaluar' = undefined
+> evaluar' = cataExpresión + - * / (*(-1)) (*1)
 >
 > operaciones' :: Expresión -> Integer
 > operaciones' = undefined
