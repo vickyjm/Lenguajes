@@ -229,13 +229,12 @@ En efecto, todo catamorfismo se construye de la misma forma para un tipo algebra
 >   negativo
 >   literal
 >   = f
->    where f = \ case
->         Suma e1 e2 = suma (f e1) (f e2)
->         Resta e1 e2 = resta (f e1) (f e2)
->         Multiplicación e1 e2 = multiplicación (f e1) (f e2)
->         División e1 e2 = división (f e1) (f e2)
->         Negativo e1 = negativo (f e1)
->         Literal e1 = literal e1
+>     where f (Suma e1 e2) = suma (f e1) (f e2)
+>           f (Resta e1 e2) = resta (f e1) (f e2)
+>           f (Multiplicación e1 e2) = multiplicación (f e1) (f e2)
+>           f (División e1 e2) = división (f e1) (f e2)
+>           f (Negativo e1) = negativo (f e1)
+>           f (Literal e1) = literal e1
 
 
 ---
@@ -246,7 +245,7 @@ En efecto, todo catamorfismo se construye de la misma forma para un tipo algebra
 > evaluar' = cataExpresión (+) (-) (*) (/) (*(-1)) (fromIntegral)
 
 > operaciones' :: Expresión -> Integer
->operaciones' = cataExpresión g g g g (1+) (*0)
+> operaciones' = cataExpresión g g g g (1+) (*0)
 >                where g x y = 1 + x + y
 
 > sumaLiterales' :: Expresión -> Integer
