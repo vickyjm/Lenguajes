@@ -52,7 +52,7 @@ En esta sección puede agregar todas las directivas necesarias para importar sí
 > import Control.Applicative (pure)
 > import Control.DeepSeq     (NFData, ($!!))
 > import Control.Monad       (void)
-> import Data.Map            (Map, empty, singleton)
+> import Data.Map            (Map, empty, singleton, foldWithKey, fromList)
 > import GHC.Generics        (Generic)
 > import System.Environment  (getArgs, getProgName)
 > import System.IO           (hPutStrLn, stderr)
@@ -359,7 +359,8 @@ debe generar el texto
 El orden en que genere las especificaciones de atributos es irrelevante.
 
 > instance RenderXHTML Atributos where
->   render = undefined
+>   render = foldWithKey f ""
+>           where f k v result = result ++ k ++ "='" ++ v ++ "' "
 
 ---
 
@@ -372,7 +373,13 @@ El texto generado debe corresponder a una etiqueta XHTML para el elemento dado. 
 o cualquier texto con el mismo significado en XHTML — el espacio en blanco, por ejemplo, es irrelevante.
 
 > instance RenderXHTML Elemento where
->   render = undefined
+>   render = \ case
+>       Elemento eti atr sig -> "<" ++ eti ++ " " ++ render atr ++ ">" ++ f sig ++ "</" ++ eti ++ ">"
+>       Texto s -> s
+>       where f  = \ case
+>               []     -> ""
+>               (x:[]) -> render x
+>               (x:xs) -> render x ++ " " ++ f xs 
 
 
 
