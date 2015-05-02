@@ -338,7 +338,15 @@ Se desea usar el método `render` para generar texto XHTML a partir de un valor 
 
 > instance RenderXHTML Documento where
 >   render (Documento raíz)
->     = undefined
+>       = encabezado ++ render raíz
+>       where
+>         encabezado
+>           = unlines
+>             [ "<?xml version='1.0' encoding='UTF-8'?>"
+>              , "<!DOCTYPE html"
+>             , "     PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'"
+>             , "     'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
+>             ]
 
 ---
 
