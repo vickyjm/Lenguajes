@@ -407,7 +407,14 @@ Las operaciones aritméticas deben representarse con un elemento `div` que conte
 Escriba su definición en términos de `cataExpresión` y utilice los combinadores para elementos de XHTML que definió previamente.
 
 > expresiónXHTML :: Expresión -> Elemento
-> expresiónXHTML = undefined
+> expresiónXHTML x =  divE (cataExpresión f j i k g h x)
+>                where f x y = x ++ [Elemento "p" empty [Texto "+"]] ++ y
+>                      j x y = x ++ [Elemento "p" empty [Texto "-"]] ++ y
+>                      i x y = x ++ [Elemento "p" empty [Texto "*"]] ++ y
+>                      k x y = x ++ [Elemento "p" empty [Texto "/"]] ++ y
+>                      g x   = [Elemento "p" empty [Texto "-"]] ++ x
+>                      h x   = [Elemento "p" empty [Texto (show x)]]
+                          
 
 Por ejemplo, el resultado de `expresiónXHTML t2` debería ser igual al de
 
