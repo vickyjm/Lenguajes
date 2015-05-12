@@ -13,14 +13,26 @@ subImagen
   -> Integer -> Integer
   -> Imagen -> Imagen
 
-subImagen xIni yIni anchura' altura' imagen = (Imagen anchura' altura' (colores imagen))
-									where colores (Imagen x y cols) = if (xIni == 0) then elimCol (take (altura'-1) cols)
-																	  else elimCol (take (altura'-1) (drop (xIni-1) cols))
+subImagen xIni yIni anchura' altura' imagen = (Imagen anchura' altura' (color imagen))
+		  where color (Imagen _ _ cols) = if (xIni == 0) then elimCol (take (fromIntegral(altura'-1)) cols)
+											else elimCol (take (fromIntegral(altura'-1)) (drop (fromIntegral(xIni-1)) cols))
+												 where elimCol m = if (yIni == 0) then (map (take (fromIntegral(anchura'-1))) m)
+										  			               else (map (take (fromIntegral(anchura'-1))) (map (drop (fromIntegral(yIni-1))) m))
 
-										  elimCol m = if (yIni == 0) then map (take (anchura'-1) m)
-										  			  else map (take (anchura'-1)) (map (drop (yIni-1))
 
-
+crearImg = 
+    Imagen { anchura = 4, altura = 2, datos = [ [ Color { rojo = 14, verde = 35, azul = 250 }
+              , Color { rojo = 75, verde = 25, azul = 0 }
+              , Color { rojo = 120, verde = 0, azul = 250 }
+              , Color { rojo = 0, verde = 3, azul = 100 }
+              ]
+              , [ Color { rojo = 14, verde = 35, azul = 250 }
+              , Color { rojo = 75, verde = 25, azul = 0 }
+              , Color { rojo = 120, verde = 0, azul = 250 }
+              , Color { rojo = 0, verde = 3, azul = 100 }
+              ]
+            ]
+      }
 
 hSplit :: Imagen -> (Imagen, Imagen)
 hSplit = undefined
