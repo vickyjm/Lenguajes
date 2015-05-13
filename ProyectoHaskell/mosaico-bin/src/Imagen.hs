@@ -6,7 +6,6 @@ module Imagen
 
 import Graphics.Mosaico.Imagen (Color(Color, rojo, verde, azul), Imagen(Imagen, altura, anchura, datos))
 
-
 elimFila 0 altura' cols = take (fromIntegral altura') cols
 elimFila xIni altura' cols = take (fromIntegral altura') (drop (fromIntegral xIni) cols)
 
@@ -36,14 +35,19 @@ crearImg =
             ]
       }
 
-extraerImagen imag = case imag of
-                Imagen _ _ cols -> cols
+extraerI (Imagen _ _ cols) = cols 
 
 hSplit :: Imagen -> (Imagen, Imagen)
-hSplit = undefined
+hSplit (Imagen ancho alto cols) = (subImagen 0 0 ancho alto' imagen, subImagen alto' 0 ancho (alto-alto') imagen)
+              where alto' = div alto 2
+                    imagen = (Imagen ancho alto cols)
 
 vSplit :: Imagen -> (Imagen, Imagen)
-vSplit = undefined
+vSplit (Imagen ancho alto cols) = (subImagen 0 0 ancho' alto imagen, subImagen 0 ancho' (ancho-ancho') alto imagen)
+              where ancho' = div ancho 2
+                    imagen = (Imagen ancho alto cols)
+
+extraerImg (i1, i2) = (extraerI i1, extraerI i2)
 
 colorPromedio :: Imagen -> Color
 colorPromedio = undefined
