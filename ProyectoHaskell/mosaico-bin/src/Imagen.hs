@@ -7,13 +7,11 @@ module Imagen
 import Graphics.Mosaico.Imagen (Color(Color, rojo, verde, azul), Imagen(Imagen, altura, anchura, datos))
 
 
-elimFila 0 altura' cols = if (altura'==1) then take 1 cols else take (fromIntegral altura') cols
-elimFila xIni altura' cols = if (altura'==1) then take (fromIntegral(altura')) (drop (fromIntegral xIni) cols) 
-                             else take (fromIntegral altura') (drop (fromIntegral xIni) cols)
+elimFila 0 altura' cols = take (fromIntegral altura') cols
+elimFila xIni altura' cols = take (fromIntegral altura') (drop (fromIntegral xIni) cols)
 
-elimCol 0 anchura' cols = if (anchura'==1) then map (take 1) cols else map (take (fromIntegral anchura')) cols
-elimCol yIni anchura' cols = if (anchura'==1) then map (take 1) (map (drop (fromIntegral yIni)) cols)
-                             else map (take (fromIntegral anchura')) (map (drop (fromIntegral yIni)) cols)
+elimCol 0 anchura' cols = map (take (fromIntegral anchura')) cols
+elimCol yIni anchura' cols = map (take (fromIntegral anchura')) (map (drop (fromIntegral yIni)) cols)
 
 subImagen
   :: Integer -> Integer
