@@ -7,6 +7,13 @@ module Imagen
 import Graphics.Mosaico.Imagen (Color(Color, rojo, verde, azul), Imagen(Imagen, altura, anchura, datos))
 
 
+elimFila 0 altura' cols = if (altura'==1) then take 1 cols else take (fromIntegral altura') cols
+elimFila xIni altura' cols = if (altura'==1) then take (fromIntegral(altura')) (drop (fromIntegral xIni) cols) 
+                             else take (fromIntegral altura') (drop (fromIntegral xIni) cols)
+
+elimCol 0 anchura' cols = if (anchura'==1) then map (take 1) cols else map (take (fromIntegral anchura')) cols
+elimCol yIni anchura' cols = if (anchura'==1) then map (take 1) (map (drop (fromIntegral yIni)) cols)
+                             else map (take (fromIntegral anchura')) (map (drop (fromIntegral yIni)) cols)
 
 subImagen
   :: Integer -> Integer
@@ -14,25 +21,25 @@ subImagen
   -> Imagen -> Imagen
 
 subImagen xIni yIni anchura' altura' imagen = (Imagen anchura' altura' (color imagen))
-		  where color (Imagen _ _ cols) = if (xIni == 0) then elimCol (take (fromIntegral(altura'-1)) cols)
-											else elimCol (take (fromIntegral(altura'-1)) (drop (fromIntegral(xIni-1)) cols))
-												 where elimCol m = if (yIni == 0) then (map (take (fromIntegral(anchura'-1))) m)
-										  			               else (map (take (fromIntegral(anchura'-1))) (map (drop (fromIntegral(yIni-1))) m))
+		  where color (Imagen _ _ cols) = elimCol yIni anchura' (elimFila xIni altura' cols)
 
 
 crearImg = 
-    Imagen { anchura = 4, altura = 2, datos = [ [ Color { rojo = 14, verde = 35, azul = 250 }
-              , Color { rojo = 75, verde = 25, azul = 0 }
-              , Color { rojo = 120, verde = 0, azul = 250 }
-              , Color { rojo = 0, verde = 3, azul = 100 }
+    Imagen { anchura = 4, altura = 2, datos = [ [ Color { rojo = 1, verde = 35, azul = 250 }
+              , Color { rojo = 2, verde = 25, azul = 0 }
+              , Color { rojo = 3, verde = 0, azul = 250 }
+              , Color { rojo = 4, verde = 3, azul = 100 }
               ]
-              , [ Color { rojo = 14, verde = 35, azul = 250 }
-              , Color { rojo = 75, verde = 25, azul = 0 }
-              , Color { rojo = 120, verde = 0, azul = 250 }
-              , Color { rojo = 0, verde = 3, azul = 100 }
+              , [ Color { rojo = 5, verde = 2, azul = 3 }
+              , Color { rojo = 6, verde = 5, azul = 6 }
+              , Color { rojo = 7, verde = 0, azul = 9 }
+              , Color { rojo = 8, verde = 1, azul = 1 }
               ]
             ]
       }
+
+extraerImagen imag = case imag of
+                Imagen _ _ cols -> cols
 
 hSplit :: Imagen -> (Imagen, Imagen)
 hSplit = undefined
