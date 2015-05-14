@@ -1,6 +1,7 @@
 module Imagen
   ( hSplit, vSplit
   , colorPromedio
+  , crearImg
   )
   where
 
@@ -49,5 +50,19 @@ vSplit (Imagen ancho alto cols) = (subImagen 0 0 ancho' alto imagen, subImagen 0
 
 extraerImg (i1, i2) = (extraerI i1, extraerI i2)
 
+
+promAux1 :: Color -> Color -> Color
+promAux1 (Color x y z) (Color p q r) = (Color (fromIntegral(p)+fromIntegral(x)) (fromIntegral(y)+fromIntegral(q)) (fromIntegral(r)+fromIntegral(z)))
+
+promAux2 :: [Color] -> Color
+promAux2 [x] = x
+promAux2 (l:ls) = foldl promAux1 l ls
+
+promAux3 :: Color -> [Color] -> Color
+promAux3 c l = promAux1 c (promAux2 l)
+
 colorPromedio :: Imagen -> Color
-colorPromedio = undefined
+colorPromedio (Imagen ancho alto (col:cols)) = aux (foldl promAux3 (promAux2 col) cols)
+                            where aux (Color x y z) = (Color (round ((fromIntegral (x))/(fromIntegral (ancho*alto)))) 
+                                                             (round ((fromIntegral (y))/(fromIntegral (ancho*alto)))) 
+                                                             (round ((fromIntegral (z))/(fromIntegral (ancho*alto)))))
