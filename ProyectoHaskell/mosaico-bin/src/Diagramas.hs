@@ -31,8 +31,18 @@ dividir o (Rectángulo prom (Imagen anch alt cols)) = case o of Horizontal ->
                                                 where f1 (img1,img2) = ((Hoja (rectánguloImagen img1)) :-: (Hoja (rectánguloImagen img2)))
                                                       f2 (img1,img2) = ((Hoja (rectánguloImagen img1)) :|: (Hoja (rectánguloImagen img2)))
 
+
+img = crearImg
+rec = rectánguloImagen img
+diag = (((Hoja rec) :-: (((Hoja rec) :|: (Hoja rec)) :-: (Hoja rec))) :-: ((Hoja rec) :|: (Hoja rec)))
+
 caminar :: [Paso] -> Diagrama -> Maybe Diagrama
-caminar = undefined
+caminar [] d = Just d
+caminar _ (Hoja rec) = Nothing 
+caminar (p:ps) (d1 :-: d2) = case p of Primero -> (caminar ps d1)
+                                       Segundo -> (caminar ps d2)
+caminar (p:ps) (d1 :|: d2) = case p of Primero -> (caminar ps d1)
+                                       Segundo -> (caminar ps d2)
 
 sustituir :: Diagrama -> [Paso] -> Diagrama -> Diagrama
 sustituir = undefined
