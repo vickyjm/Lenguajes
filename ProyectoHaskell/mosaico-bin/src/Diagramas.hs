@@ -21,7 +21,6 @@ data Orientación
   | Vertical
   deriving Show
 
--- HOLA VICKY espero que te sientas mejor :D.
 dividir :: Orientación -> Rectángulo -> Maybe Diagrama
 dividir o (Rectángulo prom (Imagen anch alt cols)) = case o of Horizontal -> 
                                                                   if alt < 2 then Nothing

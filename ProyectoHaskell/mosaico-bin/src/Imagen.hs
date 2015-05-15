@@ -51,18 +51,21 @@ vSplit (Imagen ancho alto cols) = (subImagen 0 0 ancho' alto imagen, subImagen 0
 extraerImg (i1, i2) = (extraerI i1, extraerI i2)
 
 
-promAux1 :: Color -> Color -> Color
-promAux1 (Color x y z) (Color p q r) = (Color (fromIntegral(p)+fromIntegral(x)) (fromIntegral(y)+fromIntegral(q)) (fromIntegral(r)+fromIntegral(z)))
+promAux1 :: (Num a) => (a,a,a) -> Color -> (a,a,a)
+promAux1 (x, y, z) (Color p q s) = (r, v, a)
+                where r = fromIntegral(p) + x
+                      v = fromIntegral(q) + y
+                      a = fromIntegral(s) + z
 
-promAux2 :: [Color] -> Color
-promAux2 [x] = x
-promAux2 (l:ls) = foldl promAux1 l ls
+promAux2 :: (Num a) => [Color] -> (a,a,a)
+promAux2 ls = foldl promAux1 (0,0,0) ls
 
-promAux3 :: Color -> [Color] -> Color
-promAux3 c l = promAux1 c (promAux2 l)
+promAux3 :: (Num a) => (a,a,a) -> [Color] -> (a,a,a)
+promAux3 t l = sumaTupla t (promAux2 l) 
+        where sumaTupla (a,b,c) (d,e,f) = (a + d, b + e, c + f)
 
 colorPromedio :: Imagen -> Color
-colorPromedio (Imagen ancho alto (col:cols)) = aux (foldl promAux3 (promAux2 col) cols)
-                            where aux (Color x y z) = (Color (round ((fromIntegral (x))/(fromIntegral (ancho*alto)))) 
-                                                             (round ((fromIntegral (y))/(fromIntegral (ancho*alto)))) 
-                                                             (round ((fromIntegral (z))/(fromIntegral (ancho*alto)))))
+colorPromedio (Imagen ancho alto cols) = aux (foldl promAux3 (0,0,0) cols)
+                    where aux (r,v,a) = (Color (round(fromIntegral(r)/fromIntegral(alto*ancho))) 
+                                               (round(fromIntegral(v)/fromIntegral(alto*ancho))) 
+                                               (round(fromIntegral(a)/fromIntegral(alto*ancho))))
