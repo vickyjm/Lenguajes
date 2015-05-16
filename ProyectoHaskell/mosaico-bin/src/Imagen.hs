@@ -23,15 +23,10 @@ subImagen xIni yIni anchura' altura' imagen = (Imagen anchura' altura' (color im
 
 
 crearImg = 
-    Imagen { anchura = 4, altura = 2, datos = [ [ Color { rojo = 1, verde = 35, azul = 250 }
-              , Color { rojo = 2, verde = 25, azul = 0 }
-              , Color { rojo = 3, verde = 0, azul = 250 }
-              , Color { rojo = 4, verde = 3, azul = 100 }
-              ]
-              , [ Color { rojo = 5, verde = 2, azul = 3 }
-              , Color { rojo = 6, verde = 5, azul = 6 }
-              , Color { rojo = 7, verde = 0, azul = 9 }
-              , Color { rojo = 8, verde = 1, azul = 1 }
+    Imagen { anchura = 4, altura = 1, datos = [ [ Color { rojo = 0, verde = 0, azul = 0 }
+              , Color { rojo = 0, verde = 0, azul = 0 }
+              , Color { rojo = 0, verde = 0, azul = 0 }
+              , Color { rojo = 0, verde = 0, azul = 0 }
               ]
             ]
       }

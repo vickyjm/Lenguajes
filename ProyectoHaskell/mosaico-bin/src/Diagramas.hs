@@ -33,8 +33,10 @@ dividir o (Rectángulo prom (Imagen anch alt cols)) = case o of Horizontal ->
 
 
 img = crearImg
-rec = rectánguloImagen img
-diag = (((Hoja rec) :-: (((Hoja rec) :|: (Hoja rec)) :-: (Hoja rec))) :-: ((Hoja rec) :|: (Hoja rec)))
+r = rectánguloImagen img
+
+diag1 = ((Hoja r) :|: (Hoja r)) :-: ((Hoja r) :|: (Hoja r))
+diag2 = (Hoja r) :-: (Hoja r)
 
 caminar :: [Paso] -> Diagrama -> Maybe Diagrama
 caminar [] d = Just d
@@ -44,5 +46,18 @@ caminar (p:ps) (d1 :-: d2) = case p of Primero -> (caminar ps d1)
 caminar (p:ps) (d1 :|: d2) = case p of Primero -> (caminar ps d1)
                                        Segundo -> (caminar ps d2)
 
-sustituir :: Diagrama -> [Paso] -> Diagrama -> Diagrama
-sustituir = undefined
+sustituir' :: Diagrama -> [Paso] -> Diagrama -> Diagrama
+sustituir' d1 [p] (dI :-: dD) = case p of Primero -> (d1 :-: dD) 
+                                          Segundo -> (dI :-: d1)
+sustituir' d1 [p] (dU :|: dD) = case p of Primero -> (d1 :|: dD) 
+                                          Segundo -> (dU :|: d1)                                    
+sustituir' d1 (p:ps) (dI :-: dD) = case p of Primero -> ((sustituir' d1 ps dI) :-: dD)
+                                             Segundo -> (dI :-: (sustituir' d1 ps dD))
+sustituir' d1 (p:ps) (dU :|: dD) = case p of Primero -> ((sustituir' d1 ps dU) :|: dD)
+                                             Segundo -> (dU :|: (sustituir' d1 ps dD))
+
+sustituir :: Diagrama -> [Paso] -> Diagrama -> Diagrama                                          
+sustituir d1 [] d2 = d1
+sustituir d1 p d2 = if (esJust (caminar p d2)) then sustituir' d1 p d2 else d2
+              where esJust m = case m of Nothing -> False
+                                         otherwise -> True           
