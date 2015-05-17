@@ -3,6 +3,8 @@ module Main (main) where
 import Graphics.Mosaico.Diagrama (Diagrama((:-:), (:|:), Hoja), Paso(Primero, Segundo), Rectángulo(Rectángulo, color, imagen))
 import Graphics.Mosaico.Imagen   (Imagen(Imagen, altura, anchura, datos), leerImagen,Color(Color, rojo, verde, azul))
 import Graphics.Mosaico.Ventana  (Ventana, cerrar, crearVentana, leerTecla, mostrar)
+import System.Environment (getArgs)
+import System.IO(stderr,hPutStrLn)
 
 import Diagramas (Orientación(Horizontal, Vertical), caminar, dividir, rectánguloImagen, sustituir)
 
@@ -19,11 +21,13 @@ divAux tecla (Hoja r1) = case tecla of "Up"    -> (extraerDiag (dividir Horizont
                                        "Down"  -> (extraerDiag (dividir Horizontal r1))
                                        "Left"  -> (extraerDiag (dividir Vertical r1))
                                        "Right" -> (extraerDiag (dividir Vertical r1))
+                                       otherwise -> (Hoja r1)
 divAux _ d1 = d1
 
 
 ciclo :: Ventana -> Diagrama -> [Paso] -> IO ()
 ciclo v d ps = do
+                mostrar v ps d
                 teclaLeida <- leerTecla v          -- Maybe String guardado aqui
                 let 
                     tecla = (mostrarTecla teclaLeida)  -- Tecla guardada en tecla
@@ -34,7 +38,17 @@ ciclo v d ps = do
                               "Down"  -> ciclo v diag3 (Segundo:ps)
                               "Left"  -> ciclo v diag3 (Primero:ps)
                               "Right" -> ciclo v diag3 (Segundo:ps)
+                              "BackSpace" -> ciclo v d (tail ps)
                               "q"     -> cerrar v
+                              otherwise -> ciclo v diag3 (Primero:ps)
 
 main :: IO ()
-main = undefined
+main = do
+        args <- getArgs
+        if length args /= 1 then do hPutStrLn stderr "Ingrese una imagen"
+        else do
+            imagen <- leerImagen (head args)
+            case imagen of Left msg -> hPutStrLn stderr msg
+                           Right (Imagen ancho alto cols) -> do
+                                        vent <- crearVentana ancho alto 
+                                        ciclo vent (Hoja (rectánguloImagen (Imagen ancho alto cols))) []
