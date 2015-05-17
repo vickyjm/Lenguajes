@@ -40,7 +40,7 @@ ciclo v d ps = do
                               "Right" -> ciclo v diag3 (Segundo:ps)
                               "BackSpace" -> if null ps then ciclo v d ps else ciclo v d (tail ps)
                               "q"     -> cerrar v
-                              otherwise -> ciclo v diag3 (Primero:ps)
+                              otherwise -> ciclo v d ps
 
 main :: IO ()
 main = do
