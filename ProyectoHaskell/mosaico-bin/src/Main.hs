@@ -38,7 +38,7 @@ ciclo v d ps = do
                               "Down"  -> ciclo v diag3 (Segundo:ps)
                               "Left"  -> ciclo v diag3 (Primero:ps)
                               "Right" -> ciclo v diag3 (Segundo:ps)
-                              "BackSpace" -> ciclo v d (tail ps)
+                              "BackSpace" -> if null ps then ciclo v d ps else ciclo v d (tail ps)
                               "q"     -> cerrar v
                               otherwise -> ciclo v diag3 (Primero:ps)
 
@@ -47,8 +47,8 @@ main = do
         args <- getArgs
         if length args /= 1 then do hPutStrLn stderr "Ingrese una imagen"
         else do
-            imagen <- leerImagen (head args)
-            case imagen of Left msg -> hPutStrLn stderr msg
-                           Right (Imagen ancho alto cols) -> do
-                                        vent <- crearVentana ancho alto 
-                                        ciclo vent (Hoja (rectánguloImagen (Imagen ancho alto cols))) []
+            img <- leerImagen (head args)
+            case img of Left msg -> hPutStrLn stderr msg
+                        Right (Imagen ancho alto cols) -> do
+                                       vent <- crearVentana ancho alto 
+                                       ciclo vent (Hoja (rectánguloImagen (Imagen ancho alto cols))) []
