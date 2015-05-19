@@ -40,30 +40,30 @@ ciclo v d ps = do
                     diag3 = (sustituir (diag2) (reverse ps) d)
                 if (checkVacio diag2) then ciclo v d ps
                 else 
-                  case d of (Hoja _) ->
-                                case tecla of "Up"    -> ciclo v diag3 (Primero:ps)
-                                              "Down"  -> ciclo v diag3 (Segundo:ps)
-                                              "Left"  -> ciclo v diag3 (Primero:ps)
-                                              "Right" -> ciclo v diag3 (Segundo:ps)
-                                              "BackSpace" -> if null ps then ciclo v d ps else ciclo v d (tail ps)
-                                              "q"     -> cerrar v
-                                              _ -> ciclo v d ps
-                            (_ :-: _) ->
-                                case tecla of "Up"    -> ciclo v diag3 (Primero:ps)
-                                              "Down"  -> ciclo v diag3 (Segundo:ps)
-                                              "Left"  -> ciclo v d ps
-                                              "Right" -> ciclo v d ps
-                                              "BackSpace" -> if null ps then ciclo v d ps else ciclo v d (tail ps)
-                                              "q"     -> cerrar v
-                                              _ -> ciclo v d ps
-                            (_ :|: _) ->
-                                case tecla of "Up"    -> ciclo v d ps
-                                              "Down"  -> ciclo v d ps
-                                              "Left"  -> ciclo v diag3 (Primero:ps)
-                                              "Right" -> ciclo v diag3 (Segundo:ps)
-                                              "BackSpace" -> if null ps then ciclo v d ps else ciclo v d (tail ps)
-                                              "q"     -> cerrar v
-                                              _ -> ciclo v d ps
+                  case diag of (Hoja _) ->
+                                    case tecla of "Up"    -> ciclo v diag3 (Primero:ps)
+                                                  "Down"  -> ciclo v diag3 (Segundo:ps)
+                                                  "Left"  -> ciclo v diag3 (Primero:ps)
+                                                  "Right" -> ciclo v diag3 (Segundo:ps)
+                                                  "BackSpace" -> if null ps then ciclo v d ps else ciclo v d (tail ps)
+                                                  "q"     -> cerrar v
+                                                  _ -> ciclo v d ps
+                               (_ :-: _) ->
+                                    case tecla of "Up"    -> ciclo v diag3 (Primero:ps)
+                                                  "Down"  -> ciclo v diag3 (Segundo:ps)
+                                                  "Left"  -> ciclo v d ps
+                                                  "Right" -> ciclo v d ps
+                                                  "BackSpace" -> if null ps then ciclo v d ps else ciclo v d (tail ps)
+                                                  "q"     -> cerrar v
+                                                  _ -> ciclo v d ps
+                               (_ :|: _) ->
+                                    case tecla of "Up"    -> ciclo v d ps
+                                                  "Down"  -> ciclo v d ps
+                                                  "Left"  -> ciclo v diag3 (Primero:ps)
+                                                  "Right" -> ciclo v diag3 (Segundo:ps)
+                                                  "BackSpace" -> if null ps then ciclo v d ps else ciclo v d (tail ps)
+                                                  "q"     -> cerrar v
+                                                  _ -> ciclo v d ps
 
 
 main :: IO ()
