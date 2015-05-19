@@ -1,7 +1,6 @@
 module Imagen
   ( hSplit, vSplit
   , colorPromedio
-  , crearImg
   )
   where
 
@@ -17,21 +16,8 @@ subImagen
   :: Integer -> Integer
   -> Integer -> Integer
   -> Imagen -> Imagen
-
 subImagen xIni yIni anchura' altura' imagen = (Imagen anchura' altura' (color imagen))
 		  where color (Imagen _ _ cols) = elimCol yIni anchura' (elimFila xIni altura' cols)
-
-
-crearImg = 
-    Imagen { anchura = 4, altura = 1, datos = [ [ Color { rojo = 0, verde = 0, azul = 0 }
-              , Color { rojo = 0, verde = 0, azul = 0 }
-              , Color { rojo = 0, verde = 0, azul = 0 }
-              , Color { rojo = 0, verde = 0, azul = 0 }
-              ]
-            ]
-      }
-
-extraerI (Imagen _ _ cols) = cols 
 
 hSplit :: Imagen -> (Imagen, Imagen)
 hSplit (Imagen ancho alto cols) = (subImagen 0 0 ancho alto' imagen, subImagen alto' 0 ancho (alto-alto') imagen)
@@ -42,9 +28,6 @@ vSplit :: Imagen -> (Imagen, Imagen)
 vSplit (Imagen ancho alto cols) = (subImagen 0 0 ancho' alto imagen, subImagen 0 ancho' (ancho-ancho') alto imagen)
               where ancho' = div ancho 2
                     imagen = (Imagen ancho alto cols)
-
-extraerImg (i1, i2) = (extraerI i1, extraerI i2)
-
 
 promAux1 :: (Num a) => (a,a,a) -> Color -> (a,a,a)
 promAux1 (x, y, z) (Color p q s) = (r, v, a)

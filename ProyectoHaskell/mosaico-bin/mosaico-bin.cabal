@@ -2,9 +2,9 @@ name:          mosaico-bin
 version:       0.1.0.0
 synopsis:      Generación interactiva de mosaicos (ejecutable)
 homepage:      http://ldc.usb.ve/~05-38235/cursos/CI3661/2015AJ/
-author:        NOMBRES
-maintainer:    EMAIL
-copyright:     ⓒ NOMBRES, 2015
+author:        María Victoria Jorge, Jorge Marcano
+maintainer:    mvjorgemauriello@gmail.com, jemd311@gmail.com
+copyright:     ⓒ María Victoria Jorge, Jorge Marcano, 2015
 category:      Graphics
 build-type:    Simple
 cabal-version: >=1.10

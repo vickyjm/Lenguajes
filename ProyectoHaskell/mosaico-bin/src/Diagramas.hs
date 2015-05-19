@@ -11,7 +11,7 @@ module
 import Graphics.Mosaico.Diagrama (Diagrama((:-:), (:|:), Hoja), Paso(Primero, Segundo), Rectángulo(Rectángulo, color, imagen))
 import Graphics.Mosaico.Imagen   (Imagen(Imagen, altura, anchura, datos))
 
-import Imagen (colorPromedio, hSplit, vSplit,crearImg)
+import Imagen (colorPromedio, hSplit, vSplit)
 
 rectánguloImagen :: Imagen -> Rectángulo
 rectánguloImagen img = (Rectángulo (colorPromedio img) img)
@@ -30,13 +30,6 @@ dividir o (Rectángulo prom (Imagen anch alt cols)) = case o of Horizontal ->
                                                                   else Just (f2 (vSplit (Imagen anch alt cols)))
                                                 where f1 (img1,img2) = ((Hoja (rectánguloImagen img1)) :-: (Hoja (rectánguloImagen img2)))
                                                       f2 (img1,img2) = ((Hoja (rectánguloImagen img1)) :|: (Hoja (rectánguloImagen img2)))
-
-
-img = crearImg
-r = rectánguloImagen img
-
-diag1 = ((Hoja r) :|: (Hoja r)) :-: ((Hoja r) :|: (Hoja r))
-diag2 = (Hoja r) :-: (Hoja r)
 
 caminar :: [Paso] -> Diagrama -> Maybe Diagrama
 caminar [] d = Just d
