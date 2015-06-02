@@ -1,0 +1,6 @@
+hola mundo
+false
+true
+15
+cccc
+[27, 27, 27, 27]
