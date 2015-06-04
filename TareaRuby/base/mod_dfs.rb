@@ -5,6 +5,7 @@ module DFS
     end
 
     def dfs! &block
-
+    	self.n = yield self
+    	self.each {|i| i.dfs! &block}
     end
 end
