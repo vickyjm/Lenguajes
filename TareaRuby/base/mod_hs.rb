@@ -36,7 +36,7 @@ class TrueClass
     end
 
     def mappend(x, y)
-        return (x && y)
+        return (x & y)
     end
 end
 
@@ -49,7 +49,7 @@ class FalseClass
     end
 
     def mappend(x, y)
-        return (x || y)
+        return (x | y)
     end
 end
 

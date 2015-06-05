@@ -9,19 +9,7 @@ class Node
     end
 
     def visitado_por v
-    	v.visitar(self)
-    end
-
-    def mirror 
-    	return Node.new(@x*(-1),@y*(-1))
-    end
-
-    def next
-    	return Node.new(@x+1,@y+1)
-    end
-
-    def strong 
-    	return Node.new(@x*100,@y*100)
+    	v.visitar_Nodo(self)
     end
 
     def to_s
@@ -30,68 +18,64 @@ class Node
 end
 
 class Fixnum
-
 	def visitado_por v
-		v.visitar(self)
-	end
-
-	def mirror
-		return -self
-	end
-
-	def next
-		return self+1
-	end
-
-	def strong
-		return self*100
+		v.visitar_Fixnum(self)
 	end
 end
 
 class Symbol
-
 	def visitado_por v
-		v.visitar(self)
+		v.visitar_Symbol(self)
 	end
-
-	def mirror
-		palin = self.to_s.reverse.intern
-		return (self.to_s + palin.to_s).intern
-	end
-
-	def next
-		i = 0
-		nuevosym = :""
-		while i < self.length
-			nuevosym = (nuevosym.to_s + self[i].intern.succ[0].intern.to_s).intern
-			i = i+1
-		end
-		return nuevosym
-	end
-
-	def strong 
-		return self.swapcase
-	end
-
-
 end
 
 class Visitor; end
 
 class Mirror < Visitor
-	def visitar x
-		puts x.mirror()
+	def visitar_Fixnum x
+		return -x
+	end
+
+	def visitar_Symbol x
+		palin = x.to_s.reverse.intern
+		return (x.to_s + palin.to_s).intern
+	end
+
+	def visitar_Nodo z
+		return Node.new(z.x*(-1),z.y*(-1))
 	end
 end
 
 class Next < Visitor
-	def visitar x
-		puts x.next()
+	def visitar_Fixnum x
+		return x+1
+	end
+
+	def visitar_Symbol x
+		i = 0
+		nuevosym = :""
+		while i < x.length
+			nuevosym = (nuevosym.to_s + x[i].intern.succ[0].intern.to_s).intern
+			i = i+1
+		end
+		return nuevosym
+	end
+
+	def visitar_Nodo z
+		return Node.new(z.x+1,z.y+1)
 	end
 end
 
 class Strong < Visitor
-	def visitar x
-		puts x.strong()
+	def visitar_Fixnum x
+		return x*100
+	end
+
+	def visitar_Symbol x
+		return x.swapcase
+	end
+
+	def visitar_Nodo x
+		return Node.new(z.x*100,z.y*100)
 	end
 end
