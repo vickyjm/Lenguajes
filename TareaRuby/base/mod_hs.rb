@@ -5,10 +5,9 @@ module Monoid
 
     # mconcat :: [a] -> a
     def mconcat(as)
-        total = as.first.mempty
-
+        total = self.mempty
         for i in as
-            total = i.mappend(total,i)
+            total = self.mappend(total,i)
         end
 
         return total
@@ -31,11 +30,11 @@ end
 class TrueClass
     extend Monoid
 
-    def mempty 
+    def self.mempty 
         return true
     end
 
-    def mappend(x, y)
+    def self.mappend(x, y)
         return (x & y)
     end
 end
@@ -44,11 +43,11 @@ end
 class FalseClass
     extend Monoid
 
-    def mempty
+    def self.mempty
         return false
     end
 
-    def mappend(x, y)
+    def self.mappend(x, y)
         return (x | y)
     end
 end
@@ -56,11 +55,11 @@ end
 class String
     extend Monoid
 
-    def mempty
+    def self.mempty
         return ""
     end
 
-    def mappend(x, y)
+    def self.mappend(x, y)
         return (x + y)
     end
 end
@@ -68,11 +67,11 @@ end
 class Fixnum
     extend Monoid
 
-    def mempty
+    def self.mempty
         return 0
     end
 
-    def mappend(x, y)
+    def self.mappend(x, y)
         return (x + y)
     end
 end
