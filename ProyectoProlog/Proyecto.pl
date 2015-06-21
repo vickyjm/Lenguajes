@@ -7,35 +7,41 @@ lenVal([H1|[H2|T]]) :- length(H2,X),(length(H1,X)),lenVal([H2|T]).
 tableroValido([H|[]]) :- valA(H).
 tableroValido([H|T]) :- valA(H),tableroValido(T),lenVal([H|T]).
 
+numIguales([],_,_,_).
 numIguales([_|T],X,Y,Elem) :- X1 is X-1, X > 0, numIguales(T,X1,Y,Elem).
 numIguales([H|_],0,Y,Elem) :- Y1 is Y+1, nth(Y1,H,Elem).
 
-numFilas([H|_],Tam) :- length(H,Tam).
+numFilas([],0).
+numFilas([_|T],Tam) :- numFilas(T,Tam1),Tam is Tam1+1.
 
-saltoEnPosicion(_,0,X,Y,solucion([],X,Y,[])).  %Caso base cuando no hay mas movimientos
+saltoEnPosicion(_,0,X,Y,solucion([H|[]],X1,Y1,[])).  %Caso base cuando no hay mas movimientos
+
 saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[norte|TM])) :- 
 												X1 is X-1, 
 												X1 >= 0, 
 												N1 is N-1, 
-												saltoEnPosicion(Tablero,N1,X1,Y,solucion(TS,X,Y,TM)),
+												saltoEnPosicion(Tablero,N1,X1,Y,solucion(TS,X1,Y,TM)),
 												numIguales(Tablero,X,Y,HS).
+
 saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[sur|TM])) :- 
 												X1 is X+1,
 												numFilas(Tablero,Tam),
 												X1 =< Tam,
 												N1 is N-1,
-												saltoEnPosicion(Tablero,N1,X1,Y,solucion(TS,X,Y,TM)),
+												saltoEnPosicion(Tablero,N1,X1,Y,solucion(TS,X1,Y,TM)),
 												numIguales(Tablero,X,Y,HS).
+
 saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[este|TM])) :- 
 												Y1 is Y+1,
 												length(Tablero,Tam),
 												Y1 =< Tam,
 												N1 is N-1,
-												saltoEnPosicion(Tablero,N1,X,Y1,solucion(TS,X,Y,TM)),
+												saltoEnPosicion(Tablero,N1,X,Y1,solucion(TS,X,Y1,TM)),
 												numIguales(Tablero,X,Y,HS).
+
 saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[oeste|TM])) :- 	
 												Y1 is Y-1, 
 												Y1 >= 0, 
 												N1 is N-1, 
-												saltoEnPosicion(Tablero,N1,X,Y1,solucion(TS,X,Y,TM)),
+												saltoEnPosicion(Tablero,N1,X,Y1,solucion(TS,X,Y1,TM)),
 												numIguales(Tablero,X,Y,HS).
