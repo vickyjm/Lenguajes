@@ -13,7 +13,7 @@ numIguales([H|_],0,Y,Elem) :- Y1 is Y+1, nth(Y1,H,Elem).
 
 numColums([H|_],Tam) :- length(H,Tam).
 
-saltoEnPosicion(_,0,X,Y,solucion([H|[]],X1,Y1,[])).  %Caso base cuando no hay mas movimientos
+saltoEnPosicion(Tablero,0,X,Y,solucion([H|[]],X1,Y1,[])) :- numIguales(Tablero,X1,Y1,H).  %Caso base cuando no hay mas movimientos
 
 saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[norte|TM])) :- 
 												X1 is X-1, 
