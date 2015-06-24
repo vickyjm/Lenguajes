@@ -48,3 +48,11 @@ saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[oeste|TM])) :-
 												N1 >= 0,
 												saltoEnPosicion(Tablero,N1,X,Y1,solucion(TS,X,Y1,TM)),
 												numIguales(Tablero,X,Y,HS).
+												
+auxRango(I,J,I) :- I =< J.
+auxRango(I,J,K) :- I < J, I1 is I+1, auxRango(I1,J,K).
+
+salto([H|T],N,S) :- length(T,A1),length(H,A3),
+					A2 is A3-1,	
+					auxRango(0,A1,X1),auxRango(0,A2,Y1),
+					saltoEnPosicion([H|T],N,X1,Y1,S).
