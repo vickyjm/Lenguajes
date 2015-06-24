@@ -13,12 +13,13 @@ numIguales([H|_],0,Y,Elem) :- Y1 is Y+1, nth(Y1,H,Elem).
 
 numColums([H|_],Tam) :- length(H,Tam).
 
-saltoEnPosicion(Tablero,0,X,Y,solucion([H|[]],X1,Y1,[])) :- numIguales(Tablero,X1,Y1,H).  %Caso base cuando no hay mas movimientos
+saltoEnPosicion(Tablero,0,X,Y,solucion([H],X,Y,[])) :- numIguales(Tablero,X,Y,H).  %Caso base cuando no hay mas movimientos
 
 saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[norte|TM])) :- 
 												X1 is X-1, 
 												X1 >= 0, 
 												N1 is N-1, 
+												N1 >= 0,
 												saltoEnPosicion(Tablero,N1,X1,Y,solucion(TS,X1,Y,TM)),
 												numIguales(Tablero,X,Y,HS).
 
@@ -27,6 +28,7 @@ saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[sur|TM])) :-
 												length(Tablero,Tam),
 												X1 < Tam,
 												N1 is N-1,
+												N1 >= 0,
 												saltoEnPosicion(Tablero,N1,X1,Y,solucion(TS,X1,Y,TM)),
 												numIguales(Tablero,X,Y,HS).
 
@@ -35,6 +37,7 @@ saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[este|TM])) :-
 												numColums(Tablero,Tam),
 												Y1 < Tam,
 												N1 is N-1,
+												N1 >= 0,
 												saltoEnPosicion(Tablero,N1,X,Y1,solucion(TS,X,Y1,TM)),
 												numIguales(Tablero,X,Y,HS).
 
@@ -42,5 +45,6 @@ saltoEnPosicion(Tablero,N,X,Y,solucion([HS|TS],X,Y,[oeste|TM])) :-
 												Y1 is Y-1, 
 												Y1 >= 0, 
 												N1 is N-1, 
+												N1 >= 0,
 												saltoEnPosicion(Tablero,N1,X,Y1,solucion(TS,X,Y1,TM)),
 												numIguales(Tablero,X,Y,HS).
